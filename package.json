@@ -31,7 +31,9 @@
     "ms": "^2.1.1",
     "mysql": "^2.16.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint-config-rallycoding": "^3.2.0"
+  },
   "autoload": {
     "App": "./app"
   }
