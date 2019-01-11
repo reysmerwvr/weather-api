@@ -12,7 +12,6 @@ class UserValidator {
         });
         return validation;
     }
-
 }
 
 module.exports = UserValidator;

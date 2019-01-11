@@ -86,7 +86,7 @@
      *          "name": "Test",
      *          "username": null,
      *          "email": "test@test.com",
-     *          "is_active": null,
+     *          "is_active": 1,
      *          "created_at": "2018-05-02 12:22:33",
      *          "updated_at": "2018-05-02 12:22:33",
      *          "deleted_at": null,

@@ -21,7 +21,7 @@ class UserController {
                     401
                 );
             }
-            const user = await User.query().with('roles').where('email', data.email).first();
+            const user = await User.query().where('email', data.email).first();
             user.token = `Bearer ${token}`;
             return await General.responseSuccessAPI(response, user.toJSON());
         } catch (error) {

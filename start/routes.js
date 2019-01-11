@@ -23,3 +23,10 @@ Route
     Route.post('sign-in', 'UserController.signIn');
   })
   .prefix('api');
+
+Route
+  .group(() => {
+    Route.post('get-weather-information', 'TemperatureController.getWeatherInformation');
+  })
+  .prefix('api')
+  .middleware(['auth:jwt', 'userAuth']);
