@@ -17,3 +17,9 @@
 const Route = use('Route');
 
 Route.on('/').render('welcome');
+
+Route
+  .group(() => {
+    Route.post('sign-in', 'UserController.signIn');
+  })
+  .prefix('api');
