@@ -26,7 +26,7 @@ Route
 
 Route
   .group(() => {
-    Route.post('get-weather-information', 'TemperatureController.getWeatherInformation');
+    Route.post('load-weather-information', 'TemperatureController.loadWeatherInformation');
   })
   .prefix('api')
   .middleware(['auth:jwt', 'userAuth']);
