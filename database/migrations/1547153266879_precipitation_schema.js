@@ -8,8 +8,6 @@ class PrecipitationSchema extends Schema {
     this.create('precipitations', (table) => {
       table.increments();
       table.integer('city_id').unsigned().comment('Precipitation city id');
-      table.string('city_name', 254).comment('Precipitation city name');
-      table.json('city_coord').comment('Precipitation city coord');
       table.float('precipitation_value').comment('Precipitation value');
       table.string('precipitation_type').comment('Precipitation type');
       table.json('weather').comment('Precipitation weather object');

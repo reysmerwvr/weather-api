@@ -8,8 +8,6 @@ class TemperatureSchema extends Schema {
     this.create('temperatures', (table) => {
       table.increments();
       table.integer('city_id').unsigned().comment('Temperature city id');
-      table.string('city_name', 254).comment('Temperature city name');
-      table.json('city_coord').comment('Temperature city coord');
       table.float('temp_day').comment('Day temperature');
       table.float('temp_min').comment('Min daily temperature');
       table.float('temp_max').comment('Max daily temperature');

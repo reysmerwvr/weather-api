@@ -26,7 +26,15 @@ Route
 
 Route
   .group(() => {
-    Route.post('load-weather-information', 'TemperatureController.loadWeatherInformation');
+    Route.post('forecasts', 'TemperatureController.loadForecast');
+
+    Route.get('cities', 'CityController.getCitiesByType');
+
+    Route.get('temperatures', 'TemperatureController.index');
+    Route.get('temperatures/:city_id', 'TemperatureController.show');
+
+    Route.get('precipitations', 'PrecipitationController.index');
+    Route.get('precipitations/:city_id', 'PrecipitationController.show');
   })
   .prefix('api')
   .middleware(['auth:jwt', 'userAuth']);

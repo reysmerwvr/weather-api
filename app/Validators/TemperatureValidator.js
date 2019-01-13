@@ -2,13 +2,21 @@
 
 const { validate } = use('Validator');
 const {
-    getWeatherInformationRules,
+    loadForecastRules,
+    showRules
 } = require('../Rules/TemperatureRules');
 
 class TemperatureValidator {
-    static async loadWeatherInformationValidation({ data }) {
+    static async loadForecastValidation({ data }) {
         const validation = await validate(data, { 
-            ...getWeatherInformationRules, 
+            ...loadForecastRules, 
+        });
+        return validation;
+    }
+
+    static async showValidation({ data }) {
+        const validation = await validate(data, { 
+            ...showRules
         });
         return validation;
     }

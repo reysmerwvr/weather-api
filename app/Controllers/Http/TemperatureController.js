@@ -12,14 +12,55 @@ const TemperatureValidator = use('App/Validators/TemperatureValidator');
 
 const ROOT_URL = 'http://api.openweathermap.org/data/2.5/forecast?';
 
-class TemperatureController {
-    async loadWeatherInformation({ request, response }) {
+class TemperatureController { 
+
+    async index({ response }) {
+        try {
+            const temperatures = await Temperature.query().with('city')
+            .whereNull('deleted_at')
+            //.groupBy('city_id')
+            .fetch();
+            return (_.size(temperatures.rows) > 0) ?
+            await General.responseSuccessAPI(response, temperatures.toJSON()) :
+            await General.responseErrorAPI(
+                response, undefined, 
+                'Data not found', 204);
+        } catch (error) {
+            return await General.responseErrorAPI(response, undefined, error.message, error.status);
+        }
+    }
+
+    async show({ request, response, params }) {
+        const data = request.all();
+        const cityId = params.city_id || undefined;
+        data.city_id = parseInt(cityId, 10);
+        const validation = await TemperatureValidator.showValidation({ data });
+        if (validation.fails()) {
+            const message = validation.messages()[0].message;
+            return await General.responseErrorAPI(response, undefined, message);
+        }
+        try { 
+            const temperatures = await Temperature.query().with('city')
+            .where('city_id', cityId)
+            .whereNull('deleted_at')
+            .fetch();
+            return (_.size(temperatures.rows) > 0) ?
+            await General.responseSuccessAPI(response, temperatures.toJSON()) :
+            await General.responseErrorAPI(
+                response, undefined, 
+                'Data not found', 204);
+        } catch (error) {
+            return await General.responseErrorAPI(response, undefined, error.message, error.status);
+        }
+    }
+
+    async loadForecast({ request, response }) {
         const data = request.all();
         const { coordinates } = data;
         if (coordinates) {
             data.coordinates = JSON.stringify(coordinates);
         }
-        const validation = await TemperatureValidator.loadWeatherInformationValidation({ data });
+        const validation = await TemperatureValidator.loadForecastValidation({ data });
         if (validation.fails()) {
             const message = validation.messages()[0].message;
             return await General.responseErrorAPI(response, undefined, message);
@@ -34,8 +75,8 @@ class TemperatureController {
                 forecastResponse = await this.findWeatherByCityName(data);
             }
             return (_.size(forecastResponse) > 0) 
-            ? await General.responseSuccessAPI(response, forecastResponse, 'Weather data loaded sucessfully')
-            : await General.responseErrorAPI(response, undefined, 'Error loading weather data');
+            ? await General.responseSuccessAPI(response, forecastResponse, 'Forecast data loaded sucessfully')
+            : await General.responseErrorAPI(response, undefined, 'Error loading forecast data');
         } catch (error) {
             return await General.responseErrorAPI(response, undefined, error.message, error.status);
         }
@@ -106,8 +147,8 @@ class TemperatureController {
                 }
             }
             for (const forecastObject of forecastList) {
-                const temperatureObject = this.loadTemperatureObject(city, forecastCity, forecastObject);
-                const precipitationObject = this.loadPrecipitationObject(city, forecastCity, forecastObject);
+                const temperatureObject = this.loadTemperatureObject(city, forecastObject);
+                const precipitationObject = this.loadPrecipitationObject(city, forecastObject);
                 temperatureData.push(temperatureObject);
                 precipitationData.push(precipitationObject);
             }
@@ -129,12 +170,10 @@ class TemperatureController {
         };
     }
 
-    loadTemperatureObject(city, forecastCity, forecastObject) {
+    loadTemperatureObject(city, forecastObject) {
         const mainObject = forecastObject.main;
         return {
             city_id: (city.id) ? city.id : null,
-            city_name: (city.name) ? city.name : forecastCity.name,
-            city_coord: (city.coordinates) ? city.coordinates : JSON.stringify(forecastCity.coord),
             temp_day: mainObject.temp,
             temp_min: mainObject.temp_min,
             temp_max: mainObject.temp_max,
@@ -147,12 +186,10 @@ class TemperatureController {
         };
     }
 
-    loadPrecipitationObject(city, forecastCity, forecastObject) {
+    loadPrecipitationObject(city, forecastObject) {
         const precipitationObject = forecastObject.rain;
         return {
             city_id: (city.id) ? city.id : null,
-            city_name: (city.name) ? city.name : forecastCity.name,
-            city_coord: (city.coordinates) ? city.coordinates : JSON.stringify(forecastCity.coord),
             precipitation_value: (_.size(precipitationObject) > 0) ? precipitationObject['3h'] : 0,
             precipitation_type: 'rain',
             weather: JSON.stringify(forecastObject.weather),
