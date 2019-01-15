@@ -35,6 +35,8 @@ Route
 
     Route.get('precipitations', 'PrecipitationController.index');
     Route.get('precipitations/:city_id', 'PrecipitationController.show');
+
+    Route.get('auth-user', 'UserController.retrieveAuthUser');
   })
   .prefix('api')
   .middleware(['auth:jwt', 'userAuth']);

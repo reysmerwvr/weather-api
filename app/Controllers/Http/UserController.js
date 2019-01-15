@@ -28,6 +28,22 @@ class UserController {
             return await General.responseErrorAPI(response, undefined, error.message, error.status);
         }
     }
+
+    async retrieveAuthUser({ auth, response }) {
+        try {
+            const user = await auth.getUser();
+            if (!user) {
+                return await General.responseErrorAPI(
+                    response, undefined,
+                    'Deny Access',
+                    401
+                );
+            }
+            return await General.responseSuccessAPI(response, user.toJSON());
+        } catch (error) {
+            return await General.responseErrorAPI(response, undefined, error.message, error.status);
+        }
+    }
 }
 
 module.exports = UserController;
