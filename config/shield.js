@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 module.exports = {
   /*
@@ -132,7 +132,7 @@ module.exports = {
   |
   */
   csrf: {
-    enable: true,
+    enable: false,
     methods: ['POST', 'PUT', 'DELETE'],
     filterUris: [],
     cookieOptions: {
@@ -142,4 +142,4 @@ module.exports = {
       maxAge: 7200
     }
   }
-}
+};

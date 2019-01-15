@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,27 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route')
+const Route = use('Route');
 
-Route.on('/').render('welcome')
+Route.on('/').render('welcome');
+
+Route
+  .group(() => {
+    Route.post('sign-in', 'UserController.signIn');
+  })
+  .prefix('api');
+
+Route
+  .group(() => {
+    Route.post('forecasts', 'TemperatureController.loadForecast');
+
+    Route.get('cities', 'CityController.getCitiesByType');
+
+    Route.get('temperatures', 'TemperatureController.index');
+    Route.get('temperatures/:city_id', 'TemperatureController.show');
+
+    Route.get('precipitations', 'PrecipitationController.index');
+    Route.get('precipitations/:city_id', 'PrecipitationController.show');
+  })
+  .prefix('api')
+  .middleware(['auth:jwt', 'userAuth']);

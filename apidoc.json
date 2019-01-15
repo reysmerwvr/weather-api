@@ -1,0 +1,10 @@
+{
+    "name": "Weather API",
+    "version": "1.0.0",
+    "description": "Weather API Documentation",
+    "title": "Weather API Documentation",
+    "url" : "https://weather-api.com/api",
+    "template": {
+        "forceLanguage": "en"
+    }
+}
