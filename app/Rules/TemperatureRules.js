@@ -3,6 +3,7 @@ const loadForecastRules = {
     city_id: 'required_without_all:city_name,coordinates,zip_code|integer',
     coordinates: 'required_without_all:city_name,city_id,zip_code|json',
     zip_code: 'required_without_all:city_name,city_id,coordinates|integer',
+    find_by: 'required|string|in:coordinates,city_name,city_id'
 };
 
 const showRules = {
