@@ -1,9 +1,9 @@
 const loadForecastRules = {
-    city_name: 'required_without_all:city_id,coordinates,zip_code|string|max:254',
-    city_id: 'required_without_all:city_name,coordinates,zip_code|integer',
-    coordinates: 'required_without_all:city_name,city_id,zip_code|json',
-    zip_code: 'required_without_all:city_name,city_id,coordinates|integer',
-    find_by: 'required|string|in:coordinates,city_name,city_id'
+    city_name: 'required_when:find_by,city_name|string|max:254',
+    city_id: 'required_when:find_by,city_id|integer',
+    coordinates: 'required_when:find_by,coordinates|json',
+    zip_code: 'required_when:find_by,zip_code|integer',
+    find_by: 'required|string|in:coordinates,city_name,city_id,zip_code'
 };
 
 const showRules = {
