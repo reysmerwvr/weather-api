@@ -27,7 +27,10 @@ Install the dependencies and start the server.
 ```sh
 cd weather-api
 npm install
+cp .env.example .env
 ```
+
+If you don't have `.env` file you can use the example one. Just rename `.env.example` to `.env`. Enter your configuration here.
 
 ## Migrations
 
