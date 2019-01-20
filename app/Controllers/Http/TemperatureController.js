@@ -67,12 +67,11 @@ class TemperatureController {
         }
         try {
             let forecastResponse = {};
-            if (data.coordinates) {
+            if (data.find_by === 'coordinates' && data.coordinates) {
                 forecastResponse = await this.findWeatherByCityCoordinates(data);
-            } else if (data.city_id) {
-                forecastResponse = await this.findWeatherByCityCode(data);
             } else {
-                forecastResponse = await this.findWeatherByCityName(data);
+                forecastResponse = await this.findWeatherByCityCode(data);
+                //forecastResponse = await this.findWeatherByCityName(data);
             }
             return (_.size(forecastResponse) > 0) 
             ? await General.responseSuccessAPI(response, forecastResponse, 'Forecast data loaded sucessfully')

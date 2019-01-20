@@ -1,5 +1,7 @@
 'use strict';
 
+const Env = use('Env');
+
 module.exports = {
   /*
   |--------------------------------------------------------------------------
@@ -16,7 +18,7 @@ module.exports = {
   | Function - Receives the current origin and should return one of the above values.
   |
   */
-  origin: false,
+  origin: [Env.get('WEATHER_APP_URL', 'http://localhost:3000')],
 
   /*
   |--------------------------------------------------------------------------
