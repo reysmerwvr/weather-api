@@ -10,7 +10,7 @@ class PrecipitationSchema extends Schema {
       table.integer('city_id').unsigned().comment('Precipitation city id');
       table.float('precipitation_value').comment('Precipitation value');
       table.string('precipitation_type').comment('Precipitation type');
-      table.json('weather').comment('Precipitation weather object');
+      table.text('weather').comment('Precipitation weather object');
       table.dateTime('datetime_of_data').comment('Precipitation date time of data forecasted');
       table.timestamps();
       table.dateTime('deleted_at');
