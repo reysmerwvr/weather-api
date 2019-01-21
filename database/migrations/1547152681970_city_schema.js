@@ -11,7 +11,7 @@ class CitySchema extends Schema {
       table.string('name', 254).notNullable().comment('City name');
       table.string('country', 2).comment('City country.' 
       + ' two-letter ISO code representing the country.');
-      table.json('coordinates').comment('City coordinates');
+      table.text('coordinates').comment('City coordinates');
       table.timestamps();
       table.dateTime('deleted_at');
     });
